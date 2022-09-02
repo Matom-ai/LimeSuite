@@ -272,7 +272,7 @@ if (ENABLE_GUI)
         RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIR})
     target_compile_definitions(LimeSuiteGUI PRIVATE WIN32_LEAN_AND_MEAN)
 
-    target_link_libraries(LimeSuiteGUI LimeSuite oglGraph ${wxWidgets_LIBRARIES})
+    target_link_libraries(LimeSuiteGUI LimeSuite oglGraph ${wxWidgets_LIBRARIES} xtrx)
 
     if (MSVC)
         set_property(TARGET LimeSuiteGUI APPEND PROPERTY LINK_FLAGS /SUBSYSTEM:WINDOWS)

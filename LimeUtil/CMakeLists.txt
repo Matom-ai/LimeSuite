@@ -8,6 +8,6 @@ if(ENABLE_LIME_UTIL)
         LimeUtil.cpp
         LimeUtilTiming.cpp
         LimeUtilCalSweep.cpp)
-    target_link_libraries(LimeUtil LimeSuite)
+    target_link_libraries(LimeUtil LimeSuite xtrx)
     install(TARGETS LimeUtil DESTINATION bin)
 endif()

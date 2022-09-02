@@ -23,6 +23,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include "xtrx_api.h"
 #include "LMS7002M_parameters.h"
 
 #ifdef __cplusplus

@@ -6,6 +6,8 @@
 
 #ifndef LMS7002M_PARAMETERS_H
 #define LMS7002M_PARAMETERS_H
+// XTRX
+#define MAX_DEVS	8
 #include <stdint.h>
 
 #ifdef __cplusplus

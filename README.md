@@ -29,4 +29,3 @@ Information about LimeSDR boards:
 The discourse forum is a good way to find help and discuss topics:
 
 * https://discourse.myriadrf.org/
-

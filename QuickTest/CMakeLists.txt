@@ -19,6 +19,7 @@ if(ENABLE_QUICKTEST)
 		      ${FLTK_LDFLAGS}
 		      ${FLTK_LIBRARIES}
 		      ${GLUT_LIBRARY}
+			xtrx
 		      )
     #find FLTK
     set(FLTK_SKIP_FLUID true)

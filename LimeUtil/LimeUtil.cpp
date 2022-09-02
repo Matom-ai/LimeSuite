@@ -20,6 +20,7 @@
 #include "ADF4002.h"
 #include <vector>
 #include <stdint.h>
+#include "xtrx_api.h"
 
 using namespace lime;
 
@@ -108,7 +109,12 @@ static int printInfo(void)
  **********************************************************************/
 static int findDevices(void)
 {
+#define MAX_DEVS	8
+
     std::string argStr;
+    int		res,cnt;
+    xtrx_device_info_t	di[MAX_DEVS];
+
     if (optarg != NULL) argStr = "none," + std::string(optarg);
     ConnectionHandle hint(argStr);
 
@@ -117,8 +123,12 @@ static int findDevices(void)
     {
         std::cout << "  * [" << handle.serialize() << "]" << std::endl;
     }
-
     std::cout << std::endl;
+// XTRX
+    res = xtrx_discovery (di,MAX_DEVS);
+    for	(cnt = 0;cnt < res;cnt++)
+	fprintf (stdout,"  * [Unique name :\"%s\" Proto : %s Speed : %s Devid : %s]\n",di[cnt].uniqname,di[cnt].proto,di[cnt].speed,di[cnt].devid);
+
     return EXIT_SUCCESS;
 }
 
