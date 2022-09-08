@@ -156,6 +156,7 @@ include(ConnectionEVB7COM/CMakeLists.txt)
 include(ConnectionFX3/CMakeLists.txt)
 include(ConnectionSTREAM_UNITE/CMakeLists.txt)
 include(ConnectionFTDI/CMakeLists.txt)
+include(ConnectionXTRX/CMakeLists.txt)
 include(ConnectionXillybus/CMakeLists.txt)
 include(ConnectionSPI/CMakeLists.txt)
 
