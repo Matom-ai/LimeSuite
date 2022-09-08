@@ -5,12 +5,14 @@
 */
 
 #include "ConnectionXTRX.h"
+#include "xtrx_api.h"
 #include <fstream>
 #include <iostream>
 
+#define	MAX_DEVS	8
+
 using namespace std;
 using namespace lime;
-
 
 //! make a static-initialized entry in the registry
 void __loadConnectionXTRXEntry(void) //TODO fixme replace with LoadLibrary/dlopen
@@ -19,7 +21,7 @@ void __loadConnectionXTRXEntry(void) //TODO fixme replace with LoadLibrary/dlope
 }
 
 ConnectionXTRXEntry::ConnectionXTRXEntry(void):
-    ConnectionRegistryEntry("Z_Remote") //Z just to appear last on the list
+    ConnectionRegistryEntry("Z_Connection") //Z just to appear last on the list
 {
     return;
 }
@@ -27,14 +29,18 @@ ConnectionXTRXEntry::ConnectionXTRXEntry(void):
 std::vector<ConnectionHandle> ConnectionXTRXEntry::enumerate(const ConnectionHandle &hint)
 {
     std::vector<ConnectionHandle> result;
-
-printf ("ENTRY TO REGISTER\n");
     ConnectionHandle handle;
-    handle.media = "PCIe";
-    handle.name = "XTRX";
-    handle.addr = hint.addr;
-    result.push_back(handle);
+    xtrx_device_info_t	di[MAX_DEVS];
+    int	res,c;
 
+    res = xtrx_discovery (di,MAX_DEVS);
+    for	(c = 0;c < res;c++)	{
+	handle.media = "PCIe";
+	handle.name = di[c].uniqname;
+	handle.module = "XTRX";
+	handle.addr = hint.addr;
+	result.push_back(handle);
+    }
     return result;
 }
 

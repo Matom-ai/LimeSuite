@@ -57,12 +57,7 @@ ConnectionXTRX::~ConnectionXTRX(void)
 
 void ConnectionXTRX::Close(void)
 {
-    if(socketFd)
-    {
-        shutdown(socketFd, SHUT_RDWR);
-        close(socketFd);
-    }
-    socketFd = -1;
+
 }
 
 bool ConnectionXTRX::IsOpen(void)
@@ -90,36 +85,12 @@ int ConnectionXTRX::TransferPacket(GenericPacket &pkt)
 
 int ConnectionXTRX::Write(const unsigned char *data, int len, int timeout_ms)
 {
-    int bytesWritten = 0;
-    while(bytesWritten < len)
-    {
-        int wrBytes = send(socketFd, (char*)data+bytesWritten, len-bytesWritten, 0);
-        if(wrBytes < 0)
-        {
-            lime::log(lime::LOG_LEVEL_ERROR, "ConnectionRemote write failed: %d\n", wrBytes);
-            return 0;
-        }
-        bytesWritten += wrBytes;
-        std::this_thread::yield();
-    }
-    return bytesWritten;
+    return len;
 }
 
 int ConnectionXTRX::Read(unsigned char *response, int len, int timeout_ms)
 {
-    int bytesRead = 0;
-    while(bytesRead < len)
-    {
-        int rdBytes = recv(socketFd, (char*)response+bytesRead, len-bytesRead, 0);
-        if(rdBytes < 0)
-        {
-            lime::log(lime::LOG_LEVEL_ERROR, "ConnectionRemote read failed: %d\n", rdBytes);
-            return 0;
-        }
-        bytesRead += rdBytes;
-        std::this_thread::yield();
-    }
-    return bytesRead;
+    return len;
 }
 
 int ConnectionXTRX::GetBuffersCount() const
@@ -130,9 +101,3 @@ int ConnectionXTRX::CheckStreamSize(int size) const
 {
     return size;
 }
-
-
-
-
-
-

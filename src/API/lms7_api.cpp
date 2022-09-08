@@ -61,8 +61,6 @@ inline lime::IConnection* CheckConnection(lms_device_t* device)
 API_EXPORT int CALL_CONV LMS_GetDeviceList(lms_info_str_t * dev_list)
 {
     std::vector<lime::ConnectionHandle> handles;
-    xtrx_device_info_t			di[MAX_DEVS];
-    int					res,c;
 
     handles = lime::ConnectionRegistry::findConnections();
     size_t	i;
@@ -77,12 +75,7 @@ API_EXPORT int CALL_CONV LMS_GetDeviceList(lms_info_str_t * dev_list)
             dev_list[i][sizeof(lms_info_str_t)-1]=0;
         }
     }
-// XTRX
-    res = xtrx_discovery (di,MAX_DEVS);
-    for	(c = 0; c < res;c++)	{
-        strcpy(dev_list[i+c],di[c].uniqname);
-    }
-    return (res > 0) ? handles.size() + res:handles.size();
+    return handles.size();
 }
 
 API_EXPORT int CALL_CONV LMS_Open(lms_device_t** device, const lms_info_str_t info, void* args)
