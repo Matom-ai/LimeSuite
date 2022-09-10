@@ -21,7 +21,7 @@ void __loadConnectionXTRXEntry(void) //TODO fixme replace with LoadLibrary/dlope
 }
 
 ConnectionXTRXEntry::ConnectionXTRXEntry(void):
-    ConnectionRegistryEntry("Z_Connection") //Z just to appear last on the list
+    ConnectionRegistryEntry("XTRX") //Z just to appear last on the list
 {
     return;
 }
@@ -46,5 +46,5 @@ std::vector<ConnectionHandle> ConnectionXTRXEntry::enumerate(const ConnectionHan
 
 IConnection *ConnectionXTRXEntry::make(const ConnectionHandle &handle)
 {
-    return new ConnectionXTRX(handle.addr.c_str());
+    return new ConnectionXTRX(handle.name.c_str());
 }

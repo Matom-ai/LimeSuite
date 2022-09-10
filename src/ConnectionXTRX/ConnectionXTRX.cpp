@@ -8,6 +8,7 @@
 // Remote connection is ONLY for debugging purposes to allow to forward communications
 // from external application to inspect and adjust board configuration at runtime.
 // It may cause performance issues (github #263)
+#include "xtrx_api.h"
 
 #include "ConnectionXTRX.h"
 #include <string>
@@ -40,14 +41,18 @@
 #include <sys/socket.h>
 #endif
 
+
 using namespace std;
 using namespace lime;
 
-ConnectionXTRX::ConnectionXTRX(const char *comName)
+ConnectionXTRX::ConnectionXTRX(const char *devName)
 {
 // try close before open
-    remoteIP = std::string(comName);
-    socketFd = -1;
+    printf ("ConnectionXTRX [%s]\n",devName);
+    int     		res;
+
+    res = xtrx_open (devName,0, (struct xtrx_dev**)&xtrxDev);
+//    Open (devName);
 }
 
 ConnectionXTRX::~ConnectionXTRX(void)
@@ -57,6 +62,7 @@ ConnectionXTRX::~ConnectionXTRX(void)
 
 void ConnectionXTRX::Close(void)
 {
+printf ("Close\n");
 
 }
 
@@ -65,15 +71,14 @@ bool ConnectionXTRX::IsOpen(void)
     return true;
 }
 
-int ConnectionXTRX::Open()
+int ConnectionXTRX::Open(const char *device)
 {
-    if (socketFd < 0)
-        return Connect(remoteIP.c_str(), 5000);
     return 0;
 }
 
 int ConnectionXTRX::Connect(const char* ip, uint16_t port)
 {
+printf ("Connect\n");
     return 0;
 }
 

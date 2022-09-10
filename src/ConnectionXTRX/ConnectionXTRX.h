@@ -31,6 +31,7 @@ public:
     //int TransactSPI(const int addr, const uint32_t *writeData, uint32_t *readData, const size_t size) override;
 
 protected:
+    struct xtrx_dev *xtrxDev;
     int socketFd;
     int Connect(const char* ip, uint16_t port);
 
@@ -43,7 +44,7 @@ protected:
     int GetBuffersCount() const override;
     int CheckStreamSize(int size) const override;
 private:
-    int Open();
+    int Open(const char *devName);
     void Close(void);
     std::mutex mTransferLock;
     std::string remoteIP;

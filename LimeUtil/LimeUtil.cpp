@@ -124,11 +124,12 @@ static int findDevices(void)
         std::cout << "  * [" << handle.serialize() << "]" << std::endl;
     }
     std::cout << std::endl;
+#ifdef eee
 // XTRX
     res = xtrx_discovery (di,MAX_DEVS);
     for	(cnt = 0;cnt < res;cnt++)
 	fprintf (stdout,"  * [Unique name :\"%s\" Proto : %s Speed : %s Devid : %s]\n",di[cnt].uniqname,di[cnt].proto,di[cnt].speed,di[cnt].devid);
-
+#endif
     return EXIT_SUCCESS;
 }
 
