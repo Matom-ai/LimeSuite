@@ -11,6 +11,9 @@
 #include <vector>
 #include <string>
 #include "IConnection.h"
+#include "LimeSuite.h"
+
+//extern struct xtrx_dev *xtrxDev;
 
 namespace lime{
 
@@ -25,14 +28,14 @@ public:
 
     ConnectionXTRX(const char *comName);
     ~ConnectionXTRX(void);
+    float_type GetTemperature(void);
     int TransferPacket(GenericPacket &pkt) override;
+    DeviceInfo GetDeviceInfo(void) override;
     bool IsOpen(void);
     eConnectionType GetType(void) {return CONNECTION_UNDEFINED;};
     //int TransactSPI(const int addr, const uint32_t *writeData, uint32_t *readData, const size_t size) override;
-
+//    struct xtrx_dev *xtrxDev;
 protected:
-    struct xtrx_dev *xtrxDev;
-    int socketFd;
     int Connect(const char* ip, uint16_t port);
 
     //! virtual write function to be implemented by the base class

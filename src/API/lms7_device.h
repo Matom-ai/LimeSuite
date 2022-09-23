@@ -100,6 +100,7 @@ public:
 
     RFE_Device* GetLimeRFE() const;
     void SetLimeRFE(RFE_Device* dev);
+    bool IsXTRX (void);
 
 protected:
 

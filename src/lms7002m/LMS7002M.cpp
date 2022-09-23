@@ -3,7 +3,12 @@
 @author Lime Microsystems (www.limemicro.com)
 @brief Implementation of LMS7002M transceiver configuring
 */
-
+#include "xtrxll_port.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include "xtrxll_api.h"
+#include "xtrxll_mmcm.h"
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <ciso646>
@@ -26,6 +31,9 @@
 #include "mcu_programs.h"
 
 #include "MCU_BD.h"
+
+extern struct xtrx_dev *xtrxDev;
+extern struct xtrxll_dev *xtrxllDev;
 
 using namespace std;
 using namespace lime;
@@ -1067,6 +1075,12 @@ int LMS7002M::SetReferenceClk_SX(bool tx, float_type freq_Hz)
 */
 float_type LMS7002M::GetReferenceClk_SX(bool tx)
 {
+	int	osc;
+
+	if	(xtrxllDev)	{
+		xtrxll_get_sensor(xtrxllDev, XTRXLL_REFCLK_CLK, &osc);
+		return osc;
+    }
     return _cachedRefClockRate;
 }
 

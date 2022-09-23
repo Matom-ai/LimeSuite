@@ -25,8 +25,11 @@
 #include "device_constants.h"
 #include "LMSBoards.h"
 
+
 namespace lime
 {
+  struct xtrx_dev *xtrxDev;
+  struct xtrxll_dev *xtrxllDev;
 
 std::vector<lime::ConnectionHandle> LMS7_Device::GetDeviceList()
 {
@@ -51,6 +54,10 @@ LMS7_Device* LMS7_Device::CreateDevice(const lime::ConnectionHandle& handle, LMS
         lime::ConnectionRegistry::freeConnection(conn);
         lime::ReportError(EBUSY, "Failed to open. Device is busy.");
         return nullptr;
+    }
+    if (handle.name[0] == 'p')	{	// XTRX
+        device = new LMS7_Generic(conn,obj);
+        return device;
     }
     auto info = conn->GetDeviceInfo();
     if (info.deviceName ==  lime::GetDeviceName(lime::LMS_DEV_LIMESDRMINI) || info.deviceName == lime::GetDeviceName(lime::LMS_DEV_LIMESDRMINI_V2))
@@ -1906,6 +1913,12 @@ RFE_Device* LMS7_Device::GetLimeRFE() const
 void LMS7_Device::SetLimeRFE(RFE_Device* dev)
 {
     limeRFE = dev;
+}
+bool LMS7_Device::IsXTRX()
+{
+    if (xtrxDev != NULL || xtrxllDev != NULL)
+        return true;
+    return false;
 }
 
 }//namespace lime

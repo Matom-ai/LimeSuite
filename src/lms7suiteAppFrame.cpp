@@ -1,3 +1,10 @@
+#include "xtrxll_port.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include "xtrxll_api.h"
+#include "xtrxll_mmcm.h"
+
 #include "wx/wxprec.h"
 
 #ifdef __BORLANDC__
@@ -34,7 +41,9 @@
 #include "lms7_device.h"
 #include "limeRFE_wxgui.h"
 
-using namespace std;
+extern struct xtrx_dev *xtrxDev;
+extern struct xtrxll_dev *xtrxllDev;
+
 using namespace lime;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -210,10 +219,14 @@ void LMS7SuiteAppFrame::UpdateConnections(lms_device_t* lms7controlPort)
 #endif
 }
 
+
 void LMS7SuiteAppFrame::OnControlBoardConnect(wxCommandEvent& event)
 {
     UpdateConnections(lmsControl);
     const int controlCollumn = 1;
+
+    if (xtrxllDev != NULL)
+        return;
     auto conn = ((LMS7_Device*)lmsControl)->GetConnection();
     if (conn && conn->IsOpen())
     {
@@ -230,7 +243,6 @@ void LMS7SuiteAppFrame::OnControlBoardConnect(wxCommandEvent& event)
         double refClk = lms->GetReferenceClk_SX(lime::LMS7002M::Rx);
         controlDev.Append(wxString::Format(_(" FW:%s HW:%s Protocol:%s GW:%s Ref Clk: %1.2f MHz"), info->firmwareVersion, info->hardwareVersion, info->protocolVersion, info->gatewareVersion, refClk/1e6));
         statusBar->SetStatusText(controlDev, controlCollumn);
-
         LMS_EnableCache(lmsControl,mnuCacheValues->IsChecked());
 
         wxCommandEvent evt;

@@ -1,3 +1,9 @@
+#include "xtrxll_port.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include "xtrxll_api.h"
+#include "xtrxll_mmcm.h"
 #include "IConnection.h"
 #include "ConnectionRegistry.h"
 #include "lime/LimeSuite.h"
@@ -10,6 +16,8 @@
 #include "LMS64CProtocol.h"
 #include "Streamer.h"
 #include "../limeRFE/RFE_Device.h"
+
+extern struct xtrxll_dev *xtrxllDev;
 
 using namespace std;
 
@@ -317,9 +325,21 @@ API_EXPORT int CALL_CONV LMS_EnableCache(lms_device_t *dev, bool enable)
 API_EXPORT int CALL_CONV LMS_GetChipTemperature(lms_device_t *dev, size_t ind, float_type *temp)
 {
     *temp = 0;
+    int		val;
+
     lime::LMS7_Device* lms = CheckDevice(dev);
     if (!lms)
         return -1;
+
+    if	(lms->IsXTRX ())	{
+    	xtrxll_get_sensor(xtrxllDev, XTRXLL_TEMP_SENSOR_CUR, &val);
+    	*temp = val/256;
+    	return 0;
+    }
+    if (lms->IsXTRX())  
+        printf ("XTRX\n");
+    else
+        printf ("Non XTRX\n");
     if (lms->ReadLMSReg(0x2F) == 0x3840)
     {
         lime::error("Feature is not available on this chip revision");
@@ -487,6 +507,7 @@ API_EXPORT int CALL_CONV LMS_SetGaindB(lms_device_t *device, bool dir_tx,
 API_EXPORT int CALL_CONV LMS_GetNormalizedGain(lms_device_t *device, bool dir_tx, size_t chan,float_type *gain)
 {
     lime::LMS7_Device* lms = CheckDevice(device, chan);
+
     if (!lms)
         return -1;
 
@@ -685,6 +706,7 @@ API_EXPORT int CALL_CONV LMS_GetNCOIndex(lms_device_t *device, bool dir_tx, size
 API_EXPORT int CALL_CONV LMS_ReadLMSReg(lms_device_t *device, uint32_t address, uint16_t *val)
 {
     lime::LMS7_Device* lms = CheckDevice(device);
+    
     if (!lms)
         return -1;
     *val = lms->ReadLMSReg(address);

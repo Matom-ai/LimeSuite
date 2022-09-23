@@ -71,7 +71,9 @@ void SPI_wxgui::onLMSread( wxCommandEvent& event )
     wxString address = rdAddr[index]->GetValue();
     long addr = 0;
     address.ToLong(&addr, 16);
+    lms_device_t *ctrPort2;
 
+    ctrPort2 = ctrPort;
     if (ctrPort == nullptr)
         return;
 

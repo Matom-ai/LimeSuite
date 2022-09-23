@@ -428,7 +428,6 @@ public:
     void SetLogCallback(std::function<void(const char*, int)> callback);
     LMS7002M_RegistersMap *BackupRegisterMap(void);
     void RestoreRegisterMap(LMS7002M_RegistersMap *backup);
-
 protected:
     bool mCalibrationByMCU;
     MCU_BD *mcuControl;
