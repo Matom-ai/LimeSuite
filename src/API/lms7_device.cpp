@@ -4,6 +4,12 @@
  *
  * Created on March 9, 2016, 12:54 PM
  */
+#include "xtrxll_port.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include "xtrxll_api.h"
+#include "xtrxll_mmcm.h"
 #include <cmath>
 
 #include "lms7_device.h"
@@ -25,11 +31,14 @@
 #include "device_constants.h"
 #include "LMSBoards.h"
 
+namespace xtrx {
+extern struct xtrx_dev     *xtrxDev;
+extern struct xtrxll_dev   *xtrxllDev;
+}
+
 
 namespace lime
 {
-  struct xtrx_dev *xtrxDev;
-  struct xtrxll_dev *xtrxllDev;
 
 std::vector<lime::ConnectionHandle> LMS7_Device::GetDeviceList()
 {
@@ -1916,7 +1925,7 @@ void LMS7_Device::SetLimeRFE(RFE_Device* dev)
 }
 bool LMS7_Device::IsXTRX()
 {
-    if (xtrxDev != NULL || xtrxllDev != NULL)
+    if (xtrx::xtrxDev != NULL || xtrx::xtrxllDev != NULL)
         return true;
     return false;
 }

@@ -41,9 +41,6 @@
 #include "lms7_device.h"
 #include "limeRFE_wxgui.h"
 
-extern struct xtrx_dev *xtrxDev;
-extern struct xtrxll_dev *xtrxllDev;
-
 using namespace lime;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -225,8 +222,6 @@ void LMS7SuiteAppFrame::OnControlBoardConnect(wxCommandEvent& event)
     UpdateConnections(lmsControl);
     const int controlCollumn = 1;
 
-    if (xtrxllDev != NULL)
-        return;
     auto conn = ((LMS7_Device*)lmsControl)->GetConnection();
     if (conn && conn->IsOpen())
     {

@@ -32,8 +32,10 @@
 
 #include "MCU_BD.h"
 
-extern struct xtrx_dev *xtrxDev;
-extern struct xtrxll_dev *xtrxllDev;
+namespace xtrx {
+    extern struct xtrx_dev     *xtrxDev;
+    extern struct xtrxll_dev   *xtrxllDev;
+}
 
 using namespace std;
 using namespace lime;
@@ -1077,8 +1079,8 @@ float_type LMS7002M::GetReferenceClk_SX(bool tx)
 {
 	int	osc;
 
-	if	(xtrxllDev)	{
-		xtrxll_get_sensor(xtrxllDev, XTRXLL_REFCLK_CLK, &osc);
+	if	(xtrx::xtrxllDev)	{
+		xtrxll_get_sensor(xtrx::xtrxllDev, XTRXLL_REFCLK_CLK, &osc);
 		return osc;
     }
     return _cachedRefClockRate;

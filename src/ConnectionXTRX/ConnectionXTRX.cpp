@@ -48,11 +48,13 @@
 #include <sys/socket.h>
 #endif
 
+namespace xtrx {
 struct xtrx_dev     *xtrxDev = NULL;
 struct xtrxll_dev   *xtrxllDev = NULL;
+}
 
 using namespace std;
-
+using namespace xtrx;
 //struct xtrx_dev *xtrxDev = NULL;
 //struct xtrxll_dev *xtrxllDev = NULL;
 

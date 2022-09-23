@@ -17,8 +17,10 @@
 #include "Streamer.h"
 #include "../limeRFE/RFE_Device.h"
 
-extern struct xtrxll_dev *xtrxllDev;
-
+namespace xtrx {
+extern struct xtrx_dev     *xtrxDev;
+extern struct xtrxll_dev   *xtrxllDev;
+}
 using namespace std;
 
 namespace
@@ -332,7 +334,7 @@ API_EXPORT int CALL_CONV LMS_GetChipTemperature(lms_device_t *dev, size_t ind, f
         return -1;
 
     if	(lms->IsXTRX ())	{
-    	xtrxll_get_sensor(xtrxllDev, XTRXLL_TEMP_SENSOR_CUR, &val);
+    	xtrxll_get_sensor(xtrx::xtrxllDev, XTRXLL_TEMP_SENSOR_CUR, &val);
     	*temp = val/256;
     	return 0;
     }
